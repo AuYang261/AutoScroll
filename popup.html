@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h1>AutoScroll</h1>
+
+  <div class="field">
+    <label>启动/停止快捷键</label>
+    <input type="text" id="toggleKey" readonly placeholder="点击后按下组合键">
+  </div>
+
+  <div class="field">
+    <label>切换方向快捷键</label>
+    <input type="text" id="reverseKey" readonly placeholder="点击后按下组合键">
+  </div>
+
+  <div class="field">
+    <label>默认速度</label>
+    <input type="range" id="defaultSpeed" min="0.5" max="20" step="0.5">
+    <span id="speedValue"></span>
+  </div>
+
+  <div class="field">
+    <label>默认方向</label>
+    <select id="defaultDirection">
+      <option value="down">向下 ↓</option>
+      <option value="up">向上 ↑</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>
+      <input type="checkbox" id="showHud">
+      显示浮层 (HUD)
+    </label>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
