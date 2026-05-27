@@ -6,9 +6,9 @@ const DEFAULT_CONFIG = {
   showHud: true
 };
 
-const SPEED_MIN = 0.5;
+const SPEED_MIN = 0.1;
 const SPEED_MAX = 20;
-const SPEED_STEP = 0.5;
+const SPEED_STEP = 0.1;
 
 let config = { ...DEFAULT_CONFIG };
 let state = {
@@ -16,7 +16,8 @@ let state = {
   speed: config.defaultSpeed,
   direction: config.defaultDirection,
   rafId: null,
-  middleButtonDown: false
+  middleButtonDown: false,
+  accumulator: 0
 };
 
 function loadConfig() {
@@ -46,12 +47,18 @@ loadConfig();
 function scrollLoop() {
   if (!state.active) return;
   const px = state.direction === 'down' ? state.speed : -state.speed;
-  window.scrollBy(0, px);
+  state.accumulator += px;
+  const intPx = Math.trunc(state.accumulator);
+  if (intPx !== 0) {
+    window.scrollBy(0, intPx);
+    state.accumulator -= intPx;
+  }
   state.rafId = requestAnimationFrame(scrollLoop);
 }
 
 function startScroll() {
   state.active = true;
+  state.accumulator = 0;
   state.rafId = requestAnimationFrame(scrollLoop);
   updateHud();
 }
