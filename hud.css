@@ -1,0 +1,41 @@
+#autoscroll-hud {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  display: none;
+}
+
+#autoscroll-hud.visible {
+  display: block;
+  opacity: 1;
+}
+
+#autoscroll-hud.faded {
+  opacity: 0.3;
+}
+
+#autoscroll-hud .speed-bar {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+#autoscroll-hud .speed-bar-fill {
+  height: 100%;
+  background: #4fc3f7;
+  border-radius: 2px;
+  transition: width 0.1s ease;
+}
