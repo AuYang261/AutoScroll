@@ -69,3 +69,59 @@ function adjustSpeed(delta) {
   state.speed = Math.min(SPEED_MAX, Math.max(SPEED_MIN, state.speed + delta));
   updateHud();
 }
+
+function matchesShortcut(e, shortcut) {
+  return e.ctrlKey === shortcut.ctrl &&
+    e.shiftKey === shortcut.shift &&
+    e.altKey === shortcut.alt &&
+    e.key === shortcut.key;
+}
+
+document.addEventListener('keydown', (e) => {
+  if (matchesShortcut(e, config.toggleKey)) {
+    e.preventDefault();
+    if (state.active) {
+      stopScroll();
+    } else {
+      startScroll();
+    }
+    return;
+  }
+
+  if (state.active && matchesShortcut(e, config.reverseKey)) {
+    e.preventDefault();
+    state.direction = state.direction === 'down' ? 'up' : 'down';
+    updateHud();
+    return;
+  }
+
+  if (state.active) {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      adjustSpeed(SPEED_STEP);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      adjustSpeed(-SPEED_STEP);
+    }
+  }
+});
+
+document.addEventListener('mousedown', (e) => {
+  if (e.button === 1) {
+    state.middleButtonDown = true;
+  }
+});
+
+document.addEventListener('mouseup', (e) => {
+  if (e.button === 1) {
+    state.middleButtonDown = false;
+  }
+});
+
+document.addEventListener('wheel', (e) => {
+  if (state.active && state.middleButtonDown) {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -SPEED_STEP : SPEED_STEP;
+    adjustSpeed(delta);
+  }
+}, { passive: false });
