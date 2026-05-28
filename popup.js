@@ -3,10 +3,56 @@ const DEFAULT_CONFIG = {
   reverseKey: { ctrl: true, shift: true, alt: false, key: ' ' },
   defaultSpeed: 2,
   defaultDirection: 'down',
-  showHud: true
+  showHud: true,
+  lang: ''
+};
+
+const I18N = {
+  zh: {
+    toggleKey: '启动 / 停止',
+    reverseKey: '切换方向',
+    speed: '速度',
+    direction: '方向',
+    dirDown: '↓ 向下',
+    dirUp: '↑ 向上',
+    hud: 'HUD 浮层',
+    help: '快捷键启停 · ↑↓ 调速 · 按住中键滚轮调速'
+  },
+  en: {
+    toggleKey: 'Start / Stop',
+    reverseKey: 'Reverse',
+    speed: 'Speed',
+    direction: 'Direction',
+    dirDown: '↓ Down',
+    dirUp: '↑ Up',
+    hud: 'HUD Overlay',
+    help: 'Start with shortcut · ↑↓ to adjust · Hold middle + wheel'
+  }
 };
 
 const storage = typeof browser !== 'undefined' ? browser.storage : chrome.storage;
+let currentLang = 'en';
+
+function detectLang() {
+  const navLang = navigator.language.toLowerCase();
+  return navLang.startsWith('zh') ? 'zh' : 'en';
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    el.textContent = t[el.dataset.i18n] || el.textContent;
+  });
+  document.querySelectorAll('.lang-option').forEach((el) => {
+    el.classList.toggle('active', el.dataset.lang === lang);
+  });
+  // Update direction select options
+  const dirSelect = document.getElementById('defaultDirection');
+  dirSelect.options[0].textContent = t.dirDown;
+  dirSelect.options[1].textContent = t.dirUp;
+  storage.sync.set({ lang });
+}
 
 function formatShortcut(shortcut) {
   const parts = [];
@@ -46,6 +92,13 @@ function init() {
 
     document.getElementById('defaultDirection').value = config.defaultDirection;
     document.getElementById('showHud').checked = config.showHud;
+
+    const lang = config.lang || detectLang();
+    setLang(lang);
+  });
+
+  document.querySelectorAll('.lang-option').forEach((el) => {
+    el.addEventListener('click', () => setLang(el.dataset.lang));
   });
 
   setupShortcutInput('toggleKey', 'toggleKey');

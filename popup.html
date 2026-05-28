@@ -5,38 +5,50 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>AutoScroll</h1>
+  <header>
+    <h1>AutoScroll</h1>
+    <span class="lang-switch">
+      <span class="lang-option active" data-lang="zh">中</span>
+      <span class="lang-sep">/</span>
+      <span class="lang-option" data-lang="en">EN</span>
+    </span>
+  </header>
 
   <div class="field">
-    <label>启动/停止快捷键</label>
-    <input type="text" id="toggleKey" readonly placeholder="点击后按下组合键">
+    <label data-i18n="toggleKey">Start / Stop</label>
+    <input type="text" id="toggleKey" readonly placeholder="Ctrl + Space">
   </div>
 
   <div class="field">
-    <label>切换方向快捷键</label>
-    <input type="text" id="reverseKey" readonly placeholder="点击后按下组合键">
+    <label data-i18n="reverseKey">Reverse</label>
+    <input type="text" id="reverseKey" readonly placeholder="Ctrl + Shift + Space">
   </div>
 
   <div class="field">
-    <label>默认速度</label>
-    <input type="range" id="defaultSpeed" min="0.1" max="20" step="0.1">
-    <span id="speedValue"></span>
+    <label data-i18n="speed">Speed</label>
+    <div class="speed-row">
+      <input type="range" id="defaultSpeed" min="0.1" max="20" step="0.1">
+      <span id="speedValue">2</span>
+    </div>
   </div>
 
   <div class="field">
-    <label>默认方向</label>
+    <label data-i18n="direction">Direction</label>
     <select id="defaultDirection">
-      <option value="down">向下 ↓</option>
-      <option value="up">向上 ↑</option>
+      <option value="down" data-i18n="dirDown">↓ Down</option>
+      <option value="up" data-i18n="dirUp">↑ Up</option>
     </select>
   </div>
 
-  <div class="field">
-    <label>
+  <div class="field toggle-field">
+    <label for="showHud" data-i18n="hud">HUD</label>
+    <label class="switch">
       <input type="checkbox" id="showHud">
-      显示浮层 (HUD)
+      <span class="slider"></span>
     </label>
   </div>
+
+  <div class="help" data-i18n="help">Start scroll with shortcut · ↑↓ to adjust speed · Hold middle + wheel to adjust</div>
 
   <script src="popup.js"></script>
 </body>
