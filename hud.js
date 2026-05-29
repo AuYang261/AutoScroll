@@ -15,7 +15,7 @@ function updateHud() {
   if (!hudElement || !config.showHud) return;
 
   const dirArrow = state.direction === 'down' ? '↓' : '↑';
-  const stateText = state.active ? `${state.speed.toFixed(1)} px/f` : 'Stopped';
+  const stateText = state.active ? `${state.speed.toFixed(2)} px/f` : 'Stopped';
 
   hudElement.querySelector('.direction').textContent = dirArrow;
   hudElement.querySelector('.state').textContent = stateText;

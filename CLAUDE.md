@@ -17,7 +17,7 @@ icons/          — 扩展图标 (16/48/128) + SVG 源文件 + 商店素材
 - `Ctrl+Space` 启停滚动
 - 滚动中 `↑↓` 调速（0.1~20 px/frame，小数累积到 1px 再 scrollBy）
 - 按住中键 + 滚轮调速
-- `Ctrl+Shift+Space` 切换方向
+- `Ctrl+Shift+Space` 切换方向（固定快捷键，不可自定义）
 
 ## 关键细节
 
@@ -26,3 +26,4 @@ icons/          — 扩展图标 (16/48/128) + SVG 源文件 + 商店素材
 - HUD 3 秒后半透明淡化
 - 速度低于 1px/f 时 accumulator 累积防止卡帧
 - `.claude/` 已加入 .gitignore
+- 启停和调速快捷键均可自定义，切换方向为固定快捷键

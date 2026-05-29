@@ -1,6 +1,7 @@
 const DEFAULT_CONFIG = {
   toggleKey: { ctrl: true, shift: false, alt: false, key: ' ' },
-  reverseKey: { ctrl: true, shift: true, alt: false, key: ' ' },
+  speedUpKey: { ctrl: false, shift: false, alt: false, key: 'ArrowUp' },
+  speedDownKey: { ctrl: false, shift: false, alt: false, key: 'ArrowDown' },
   defaultSpeed: 2,
   defaultDirection: 'down',
   showHud: true,
@@ -10,23 +11,25 @@ const DEFAULT_CONFIG = {
 const I18N = {
   zh: {
     toggleKey: '启动 / 停止',
-    reverseKey: '切换方向',
+    speedUpKey: '加速',
+    speedDownKey: '减速',
     speed: '速度',
     direction: '方向',
     dirDown: '↓ 向下',
     dirUp: '↑ 向上',
     hud: 'HUD 浮层',
-    help: '快捷键启停 · ↑↓ 调速 · 按住中键滚轮调速'
+    help: '快捷键启停 · 快捷键或按住中键滚轮调速'
   },
   en: {
     toggleKey: 'Start / Stop',
-    reverseKey: 'Reverse',
+    speedUpKey: 'Speed Up',
+    speedDownKey: 'Speed Down',
     speed: 'Speed',
     direction: 'Direction',
     dirDown: '↓ Down',
     dirUp: '↑ Up',
     hud: 'HUD Overlay',
-    help: 'Start with shortcut · ↑↓ to adjust · Hold middle + wheel'
+    help: 'Start with shortcut · Speed keys or hold middle + wheel to adjust'
   }
 };
 
@@ -84,7 +87,8 @@ function setupShortcutInput(inputId, configKey) {
 function init() {
   storage.sync.get(DEFAULT_CONFIG, (config) => {
     document.getElementById('toggleKey').value = formatShortcut(config.toggleKey);
-    document.getElementById('reverseKey').value = formatShortcut(config.reverseKey);
+    document.getElementById('speedUpKey').value = formatShortcut(config.speedUpKey);
+    document.getElementById('speedDownKey').value = formatShortcut(config.speedDownKey);
 
     const speedInput = document.getElementById('defaultSpeed');
     speedInput.value = config.defaultSpeed;
@@ -102,7 +106,8 @@ function init() {
   });
 
   setupShortcutInput('toggleKey', 'toggleKey');
-  setupShortcutInput('reverseKey', 'reverseKey');
+  setupShortcutInput('speedUpKey', 'speedUpKey');
+  setupShortcutInput('speedDownKey', 'speedDownKey');
 
   document.getElementById('defaultSpeed').addEventListener('input', (e) => {
     const val = parseFloat(e.target.value);

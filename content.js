@@ -1,14 +1,17 @@
 const DEFAULT_CONFIG = {
   toggleKey: { ctrl: true, shift: false, alt: false, key: ' ' },
-  reverseKey: { ctrl: true, shift: true, alt: false, key: ' ' },
+  speedUpKey: { ctrl: false, shift: false, alt: false, key: 'ArrowUp' },
+  speedDownKey: { ctrl: false, shift: false, alt: false, key: 'ArrowDown' },
   defaultSpeed: 2,
   defaultDirection: 'down',
   showHud: true
 };
 
+const REVERSE_KEY = { ctrl: true, shift: true, alt: false, key: ' ' };
+
 const SPEED_MIN = 0.1;
 const SPEED_MAX = 20;
-const SPEED_STEP = 0.1;
+const SPEED_STEP = 0.05;
 
 let config = { ...DEFAULT_CONFIG };
 let state = {
@@ -95,7 +98,7 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  if (state.active && matchesShortcut(e, config.reverseKey)) {
+  if (state.active && matchesShortcut(e, REVERSE_KEY)) {
     e.preventDefault();
     state.direction = state.direction === 'down' ? 'up' : 'down';
     updateHud();
@@ -103,10 +106,10 @@ document.addEventListener('keydown', (e) => {
   }
 
   if (state.active) {
-    if (e.key === 'ArrowUp') {
+    if (matchesShortcut(e, config.speedUpKey)) {
       e.preventDefault();
       adjustSpeed(SPEED_STEP);
-    } else if (e.key === 'ArrowDown') {
+    } else if (matchesShortcut(e, config.speedDownKey)) {
       e.preventDefault();
       adjustSpeed(-SPEED_STEP);
     }
